@@ -38,4 +38,4 @@ for _ in range(3):
   student = make_student()
   first = student["first_name"].replace("'", "''")
   last = student["last_name"].replace("'", "''")
-       print(f"('{first}', '{last}', '{student['email']}', '{student['race_ethnicity']}', '{student['sex']}'),")
+  print(f"('{first}', '{last}', '{student['email']}', '{student['race_ethnicity']}', '{student['sex']}'),")
