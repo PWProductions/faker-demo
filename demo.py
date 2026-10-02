@@ -4,15 +4,38 @@
 from faker import Faker
 
 fake = Faker()
+
 Faker.seed(42)
+
+SEXES = ["Male", "Female"]
+
+ETHNICITIES = ["White", "Black or African American", "Hispanic or Latino",
+               "Asian", "Middle Eastern or North African"]
+
+def make_student():
+    """Return one fake student as a dictionary."""
+    sex = fake.random_element(SEXES)
+    if sex == "Male":
+        first_name = fake.first_name_male()
+    else:
+        first_name = fake.first_name_female()
+    return {
+        "first_name": first_name,
+        "last_name": fake.last_name(),
+        "email": fake.safe_email(),
+        "sex": sex,
+        "race_ethnicity": fake.random_element(ETHNICITIES),
+        "birth_date": fake.date_of_birth(minimum_age=18, maximum_age=60),
+    }
 
 print("Five fake students")
 for _ in range(5):
-  print(fake.first_name(), fake.last_name(), fake.safe_email(), fake.date_of_birth(minimum_age=16, maximum_age=100))
+  student = make_student()
+  print(student["first_name"], student["last_name"], student["email"], student["birth_date"], student["sex"], student["race_ethnicity"])
 
 print("Three SQL rows")
 for _ in range(3):
-  first = fake.first_name().replace("'", "''")
-  last = fake.last_name().replace("'", "''")
-  print(f"('{first}', '{last}', '{fake.safe_email()}'),")
-  
+  student = make_student()
+  first = student["first_name"].replace("'", "''")
+  last = student["last_name"].replace("'", "''")
+       print(f"('{first}', '{last}', '{student['email']}', '{student['race_ethnicity']}', '{student['sex']}'),")
